@@ -133,7 +133,7 @@ function App() {
         method: "DELETE",
       }
     ).then((resp) => resp.json())
-      .then(data => {
+      .then(() => {
 
         organizeTabs(song._id)
 

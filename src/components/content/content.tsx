@@ -6,7 +6,6 @@ import type { ContextType, Song } from "../../types/types";
 import { useAppContext } from "../../context/appContext";
 import { ActionsButtons } from "../actionsButtons/actionsButtons";
 import { useState } from "react";
-import { HiCheck } from "react-icons/hi2";
 import { FaCheck } from "react-icons/fa";
 
 const songFormSchema = Yup.object().shape({
@@ -25,7 +24,7 @@ export const Content = ({ song }: { song: Song }) => {
     const songFormik = useFormik<Song>({
         initialValues: song,
         validationSchema: songFormSchema,
-        onSubmit: async (values, actions) => {
+        onSubmit: async (values) => {
             // console.log(values)
             saveSong({ ...values })
         },

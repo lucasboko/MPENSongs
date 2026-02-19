@@ -1,4 +1,4 @@
-import { Editor, EditorContent, useEditor, useEditorState } from '@tiptap/react'
+import { Editor, EditorContent, useEditor } from '@tiptap/react'
 import { Placeholder } from '@tiptap/extensions'
 import StarterKit from '@tiptap/starter-kit'
 import { useEffect, useState } from 'react';
@@ -6,25 +6,7 @@ import { useEffect, useState } from 'react';
 import { HiBold } from "react-icons/hi2";
 import { FaItalic } from "react-icons/fa";
 
-
-export function menuBarStateSelector(ctx: EditorStateSnapshot<Editor>) {
-  return {
-    // Text formatting
-    isBold: ctx.editor.isActive('bold') ?? false,
-    canBold: ctx.editor.can().chain().toggleBold().run() ?? false,
-    isItalic: ctx.editor.isActive('italic') ?? false,
-    canItalic: ctx.editor.can().chain().toggleItalic().run() ?? false,
-  }
-}
-
-export type MenuBarState = ReturnType<typeof menuBarStateSelector>
-
 const MenuBar = ({ editor }: { editor: Editor | null }) => {
-
-  const editorState = useEditorState({
-    editor,
-    selector: menuBarStateSelector,
-  })
 
   if (!editor) {
     return null
@@ -35,18 +17,16 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={!editorState?.canBold}
-        className={editorState?.isBold ? 'is-active' : ''}
+        className={editor.isActive('bold') ? 'is-active' : ''}
       >
-        <HiBold className={editorState?.isBold ? 'text-blue-500' : ''} />
+        <HiBold className={editor.isActive('bold') ? 'text-blue-500' : ''} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editorState?.canItalic}
-        className={editorState?.isItalic ? 'is-active' : ''}
+        className={editor.isActive('italic') ? 'is-active' : ''}
       >
-        <FaItalic className={editorState?.isItalic ? 'text-blue-500' : ''} />
+        <FaItalic className={editor.isActive('italic') ? 'text-blue-500' : ''} />
       </button>
     </div>
   )
