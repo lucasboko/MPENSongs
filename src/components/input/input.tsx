@@ -1,3 +1,5 @@
+import type { ReactElement } from "react"
+
 type InputProps = {
     label?: string
     initialValue?: string
@@ -8,7 +10,7 @@ type InputProps = {
     value?: string | number
     onChange: (val: string) => void;
     onFocus?: () => void
-    error?: string
+    error?: string | ReactElement
 
     leftLabel?: boolean
     placeholder?: string

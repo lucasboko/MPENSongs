@@ -1,7 +1,10 @@
+import { Route, Routes } from 'react-router';
 import { useEffect, useState } from 'react'
 import { AppContext } from './context/appContext'
 import type { Song, SongId, SongsRecord } from './types/types'
 import { Dashboard } from './pages/Dashboard/dashboard'
+import { getLoggedInUser } from './utilities/utilities';
+import { Login } from './pages/Login/login';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -31,7 +34,7 @@ function App() {
 
   }
 
-  const organizeTabs = (_id? : string) => {
+  const organizeTabs = (_id?: string) => {
 
     if (_id === tab?._id) {
 
@@ -181,10 +184,9 @@ function App() {
     callback?: (id?: SongId, force?: boolean) => void
   ) => {
 
-    activateSaveModal(undefined) 
+    activateSaveModal(undefined)
     setIsSavingSong(true)
     if (tab) {
-      // console.log(tab)
       fetch(
         `${API_URL}/${tab._id}`,
         {
@@ -268,6 +270,7 @@ function App() {
   }, [])
 
 
+  const isLoggedIn = getLoggedInUser()
 
   return (
     <>
@@ -295,11 +298,15 @@ function App() {
         isTranslating,
         setIsTranslating,
 
-        isSavingSong, 
-        setIsSavingSong
+        isSavingSong,
+        setIsSavingSong,
+
+        updateUrl
 
       }}>
-        <Dashboard />
+        <Routes>
+          <Route index element={isLoggedIn ? <Dashboard /> : <Login />} />
+        </Routes>
       </AppContext.Provider>
 
     </>

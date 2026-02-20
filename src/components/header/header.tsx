@@ -1,11 +1,14 @@
 import { Input } from "../input/input"
+import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { HiMiniMusicalNote, HiMiniPlus, HiOutlineTrash } from "react-icons/hi2";
+import { MdLogout } from "react-icons/md";
 import mpenlogo from '../../assets/mpensongs128x128.png'
 import { useAppContext } from "../../context/appContext";
 import type { ContextType } from "../../types/types";
 import { useState } from "react";
+import { clearAuth } from "../../utilities/utilities";
 
 
 
@@ -20,7 +23,9 @@ type SearchFormValues = {
 
 export const Header = () => {
 
-    const { createNewSong, filteredSongs, filterSongs } = useAppContext() as ContextType
+    const navigate = useNavigate()
+    
+    const { createNewSong, filteredSongs, filterSongs, updateUrl } = useAppContext() as ContextType
     const [showSongs, setShowSongs] = useState<boolean>(false)
     const searchFormik = useFormik<SearchFormValues>({
         initialValues: {
@@ -45,7 +50,12 @@ export const Header = () => {
     const showError = (field: keyof SearchFormValues) => searchFormik.touched[field]
         ? searchFormik.errors[field] as string
         : undefined
-
+    
+    const logout = () => {
+        clearAuth()
+        updateUrl(undefined)
+        navigate(0)
+    }
 
     return <div className="absolute w-full z-30 bottom-[0]">
         <div className="flex gap-[5px] bg-white h-[55px] px-[15px] items-center">
@@ -67,9 +77,16 @@ export const Header = () => {
             <button
                 type="button"
                 className="flex cursor-pointer p-[9px] bg-yellow-500 rounded-full items-center justify-center"
-                onClick={() => createNewSong()}
+                onClick={createNewSong}
             >
                 <HiMiniPlus className="size-[20px] text-white" />
+            </button>
+            <button
+                type="button"
+                className="flex cursor-pointer p-[9px] items-center justify-center"
+                onClick={logout}
+            >
+                <MdLogout className="size-[20px]" />
             </button>
         </div>
         {((searchFormik.values.search && filteredSongs.length) || showSongs)
@@ -104,7 +121,6 @@ const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () => void }
                     textOverflow: "ellipsis",
                     textAlign: "left",
                     width: '250px'
-
                 }} 
                 className={` cursor-pointer font-[500] text-gray-700`} onClick={() => { clearSearch(); openSongTab(_id) }}>
                 {songs[_id].name}
@@ -116,7 +132,6 @@ const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () => void }
                     textOverflow: "ellipsis",
                     textAlign: "left",
                     width: '250px'
-
                 }} >{songs[_id].artist}</div>
         </div>
         <div className="w-[20px]" onClick={() => activateDeleteModal(songs[_id])}>

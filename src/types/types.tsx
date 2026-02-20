@@ -35,6 +35,8 @@ export type ContextType = {
     isSavingSong: boolean
     setIsSavingSong: React.Dispatch<React.SetStateAction<boolean>>
 
+    updateUrl: (_id: SongId | undefined) => void
+
 }
 
 export type SongId = string
@@ -49,3 +51,18 @@ export type Song = {
 }
 
 export type SongsRecord = Record<string, Song>
+
+export type UserProps = {
+    firstname: string
+    lastname: string
+    email: string
+}
+
+
+export type LoginInputProps = {
+    password: string
+}
+
+export type LoggedInUser = {
+    token: string
+} | null
