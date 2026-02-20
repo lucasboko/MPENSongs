@@ -11,20 +11,20 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
     return null
   }
-
+  
   return (
-    <div className="bg-white absolute right-[-10px] flex flex-col items-center text-center w-[20px] p-[15px] menu-bar shadow-xs/20 rounded-full gap-[10px]">
+    <div className="bg-white z-30 absolute right-[5px] flex flex-col items-center text-center w-[20px] p-[15px] menu-bar shadow-xs/20 rounded-full gap-[10px]">
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive('bold') ? 'is-active' : ''}
+        className={editor.isActive('bold') ? 'is-active cursor-pointer' : 'cursor-pointer'}
       >
         <HiBold className={editor.isActive('bold') ? 'text-blue-500' : ''} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive('italic') ? 'is-active' : ''}
+        className={editor.isActive('italic') ? 'is-active cursor-pointer' : 'cursor-pointer'}
       >
         <FaItalic className={editor.isActive('italic') ? 'text-blue-500' : ''} />
       </button>
@@ -67,7 +67,7 @@ export const TipTapEditor = ({
   return (
     <div className='relative'>
       {!hideSettings && <MenuBar editor={editor} />}
-      <div className="text-xs bg-white overflow-y-scroll mt-[15px]" 
+      <div className=" bg-white overflow-y-scroll pr-[30px]" 
         style={{ height: `${height}px`, scrollbarWidth: 'thin', scrollbarColor: '#eee white' }}>
         <EditorContent editor={editor} />
       </div>

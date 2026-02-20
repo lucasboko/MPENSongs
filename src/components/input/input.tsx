@@ -40,7 +40,7 @@ export const Input = (props: InputProps) => {
     } = props;
 
     return <div className={wrapperStyling}>
-        {label && <div className="text-xs">{label}</div>}
+        {label && <div className="">{label}</div>}
         <input
             id={id}
             name={name}
@@ -57,7 +57,7 @@ export const Input = (props: InputProps) => {
                 rounded-full
                 grow 
                 color-black 
-                text-xs
+                
                 bg-white 
                 fill-white
                 border-1 

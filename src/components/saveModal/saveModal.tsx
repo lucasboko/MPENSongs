@@ -34,18 +34,18 @@ export const SaveModal = (props: PropsType) => {
                         className='pointer text-blue-500 rounded-full'
                         onClick={() => activateSaveModal(undefined)}
                     >
-                        <span className='text-xs'>Annuler</span>
+                        <span className=''>Annuler</span>
                     </button>
                     <button
-                        className='text-xs pointer text-blue-500 rounded-full'
+                        className=' pointer text-blue-500 rounded-full'
                         onClick={() => props.closeWithoutSave()}
                     >
-                        <span className='text-xs'>Ne pas sauvergarder</span>
+                        <span className=''>Ne pas sauvergarder</span>
                     </button>
                     <button
-                        className='text-xs pointer text-blue-500 rounded-full'
+                        className=' pointer text-blue-500 rounded-full'
                         onClick={onSave}>
-                        <span className='text-xs'>Sauvegarder</span>
+                        <span className=''>Sauvegarder</span>
                     </button>
                 </div>
             }

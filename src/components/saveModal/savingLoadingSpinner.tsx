@@ -9,7 +9,7 @@ export const SavingLoadingSpinner = () => {
     return (
         <Modal
             show={isSavingSong}
-            body={<div className="text-xs">Sauvegarde en cours...</div>}
+            body={<div className="">Sauvegarde en cours...</div>}
             className="w-[300px] "
             backDropStyling="bg-black/30"
         />

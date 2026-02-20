@@ -6,11 +6,10 @@ import { translator } from "../../utilities/geminiTranslator"
 export const ActionsButtons = ({
     song, setTransltorContent }: {
         song: Song
-        // handleChange: (value: string, fieldName: string) => void
         setTransltorContent: React.Dispatch<React.SetStateAction<string>>
     }) => {
 
-    const activeEffect = `shadow-md/20 cursor-pointer p-[10px] bg-white-500 rounded-full bg-white hover:bg-blue-500 hover:text-yellow-400`
+    const activeEffect = `p-[8px] shadow-md/20 cursor-pointer p-[10px] bg-white-500 rounded-full bg-white hover:bg-blue-500 hover:text-white`
 
     const { setShowFullScreen, setIsTranslating, activateDeleteModal } = useAppContext() as ContextType
 
@@ -45,21 +44,21 @@ export const ActionsButtons = ({
             className={activeEffect}
             onClick={runTranslation}
         >
-            <HiLanguage className="size-4" />
+            <HiLanguage className="size-[18px]" />
         </button>
         <button
             type="button"
             className={activeEffect}
             onClick={copyLink}
         >
-            <HiMiniArrowUpTray className="size-4" />
+            <HiMiniArrowUpTray className="size-[18px]" />
         </button>
         <button
             type="button"
             className={activeEffect}
             onClick={() => setShowFullScreen(song?.lyrics)}
         >
-            <HiArrowsPointingOut className="size-4" />
+            <HiArrowsPointingOut className="size-[18px]" />
         </button>
 
         <button
@@ -67,7 +66,7 @@ export const ActionsButtons = ({
             className={activeEffect}
             onClick={() => activateDeleteModal(song)}
         >
-            <HiOutlineTrash className="size-4" />
+            <HiOutlineTrash className="size-[18px]" />
         </button>
     </>
 }

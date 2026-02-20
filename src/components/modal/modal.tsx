@@ -16,7 +16,7 @@ export const Modal = (props: ModalType) => {
         header, footer, body, show, className, backDropStyling, bodyStyling
     } = props 
 
-    return <div className={`flex z-10 fixed bg-black/20 justify-center items-center w-full h-full ${backDropStyling} ${show ? '' : 'hidden'}`}>
+    return <div className={`flex z-40 fixed bg-black/20 justify-center items-center w-full h-full ${backDropStyling} ${show ? '' : 'hidden'}`}>
         <div className={`w-[300px] bg-white rounded-[10px] border-0 border-gray-100 ${className}`}>
             {
                 header && <div className="px-[20px] py-[15px]">

@@ -1,43 +1,41 @@
-import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/appContext';
 import type { ContextType } from '../../types/types';
 import { Content } from '../content/content';
 
 import { HiXMark } from "react-icons/hi2";
 
-const tabClass = 'text-xs flex gap-[10px] py-[4px] px-[10px] items-center'
+const tabClass = 'flex gap-[10px] px-[10px] items-center'
 
 export const SongsTabs = () => {
 
     const { tab, openedSong, setTab, closeSongTab } = useAppContext() as ContextType
     const tabs = Object.keys(openedSong)
 
-    const [tabWidth, setTabWidth] = useState(100);
+    // useEffect(() => {
+    //     const osl = Object.keys(openedSong).length
+    //     const handleResize = (osl: number) => setTabWidth(window.innerWidth / osl > 180 ? 180 : window.innerWidth / osl)
 
-    useEffect(() => {
-        const osl = Object.keys(openedSong).length
-        const handleResize = (osl: number) => setTabWidth((window.innerWidth - 350) / osl > 180 ? 180 : (window.innerWidth - 350) / osl)
+    //     window.addEventListener('resize', () => handleResize(osl));
 
-        window.addEventListener('resize', () => handleResize(osl));
-
-    }, [openedSong]);
+    // }, [openedSong]);
 
 
-    useEffect(() => {
-        const osl = Object.keys(openedSong).length
-        const set = (size: number) => setTabWidth(size)
-        set((window.innerWidth - 350) / osl > 180 ? 180 : (window.innerWidth - 350) / osl)
-    }, [openedSong]);
+    // useEffect(() => {
+    //     const osl = Object.keys(openedSong).length
+    //     const set = (size: number) => setTabWidth(size)
+    //     set(window.innerWidth / osl > 180 ? 180 : window.innerWidth / osl)
+    // }, [openedSong]);
 
     return (
-        <div className=" ml-[300px] grow h-full py-[10px] " >
-            <div className='flex gap-[0px]'>
+        <div className="grid w-full h-[calc(100%-56px)]">
+            <div className='w-full flex gap-[0px] overflow-x-scroll bg-gray-100 h-[50px]'
+                style={{ scrollbarWidth: 'thin', scrollbarColor: '#ddd white' }}>
                 {
                     tabs.map(_id =>
                         <div
                             key={_id}
-                            className={`${tabClass} ${(tab && _id === tab._id) ? 'font-bold text-blue-500' : 'text-gray-500'}`}
-                            style={{ width: `${tabWidth}px` }}
+                            className={`${tabClass} ${(tab && _id === tab._id) ? 'bg-white' : ''}`}
+                            style={{ width: `190px` }}
                         >
                             <button
                                 style={{
@@ -46,19 +44,19 @@ export const SongsTabs = () => {
                                     textOverflow: "ellipsis",
                                     textAlign: "left"
                                 }}
-                                className='grow cursor-pointer'
+                                className='grow cursor-pointer text-xs'
                                 onClick={() => setTab(openedSong[_id])}>
                                 {openedSong[_id].name || 'Titre inconnu'}
                             </button>
-                            <div className='flex w-[30px] justify-end cursor-pointer'><HiXMark onClick={() => closeSongTab(_id)} /></div>
+                            <div className='flex w-[20px] justify-end cursor-pointer'><HiXMark onClick={() => closeSongTab(_id)} /></div>
                         </div>
                     )
                 }
             </div>
-            <div className='h-full p-[10px] lg:w-[60%] md:w-[90%]'>
+            <div className='lg:w-[50%] md:w-[70%] w-[100%] justify-self-center md:justify-self-left'>
                 {
                     tabs.map(_id =>
-                        <React.Fragment key={_id} >
+                        <div key={_id} >
                             {
                                 tab
                                     ? <div className={`${(tab && _id === tab._id) ? 'block' : 'hidden'}`}>
@@ -66,7 +64,7 @@ export const SongsTabs = () => {
                                     </div>
                                     : null
                             }
-                        </React.Fragment>
+                        </div>
 
                     )
                 }

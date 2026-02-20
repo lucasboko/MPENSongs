@@ -8,7 +8,7 @@ export const TranslatorLoadingSpinner = () => {
     return (
         <Modal
             show={isTranslating}
-            body={<div className="text-xs">Traduction en cours...</div>}
+            body={<div className="">Traduction en cours...</div>}
             className="w-[300px] "
             backDropStyling="bg-black/30"
         />

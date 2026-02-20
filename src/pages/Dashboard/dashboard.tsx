@@ -13,10 +13,7 @@ export const Dashboard = () => {
 
     const { fullScreenContent, closeSongTab, saveSong, saveModalIsActive, activateSaveModal } = useAppContext() as ContextType
 
-    return <div className="flex flex-row relative overflow-y-hidden" style={{ height: '100vh' }}>
-        <SideBar />
-        <SongsTabs />
-
+    return <div className="relative overflow-y-hidden" style={{ height: '100vh' }}>
         <SaveModal
             closeWithoutSave={() => { closeSongTab(saveModalIsActive?._id, true); activateSaveModal(undefined) }}
             save={saveSong}
@@ -28,6 +25,7 @@ export const Dashboard = () => {
 
         <TranslatorLoadingSpinner />
         {fullScreenContent && <FullScreenLyrics />}
-        
+        <SideBar />
+        <SongsTabs />
     </div>
 }

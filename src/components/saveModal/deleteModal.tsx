@@ -21,13 +21,13 @@ export const DeleteModal = () => {
                         className='pointer text-blue-500 rounded-full'
                         onClick={() => activateDeleteModal(undefined)}
                     >
-                        <span className='text-xs'>Annuler</span>
+                        <span className=''>Annuler</span>
                     </button>
                     
                     <button
-                        className='text-xs pointer text-blue-500 rounded-full'
+                        className=' pointer text-blue-500 rounded-full'
                         onClick={onDelete}>
-                        <span className='text-xs'>Supprimer</span>
+                        <span className=''>Supprimer</span>
                     </button>
                 </div>
             }
