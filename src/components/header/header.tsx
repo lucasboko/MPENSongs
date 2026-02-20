@@ -18,7 +18,7 @@ type SearchFormValues = {
 }
 
 
-export const SideBar = () => {
+export const Header = () => {
 
     const { createNewSong, filteredSongs, filterSongs } = useAppContext() as ContextType
     const [showSongs, setShowSongs] = useState<boolean>(false)
@@ -73,7 +73,7 @@ export const SideBar = () => {
             </button>
         </div>
         {((searchFormik.values.search && filteredSongs.length) || showSongs)
-            && <div className="p-[10px] absolute w-[350px] border-t-1 border-r-1 border-gray-200 bottom-[55px] bg-white h-[70vh] overflow-y-auto rounded-t-xl"
+            && <div className="p-[10px] absolute w-[325px] border-t-1 border-r-1 border-gray-200 bottom-[55px] bg-white h-[50vh] overflow-y-auto rounded-t-xl"
                 style={{ scrollbarWidth: 'thin', scrollbarColor: '#ddd white' }}>
                 {
                     filteredSongs.map(song_id =>
@@ -97,8 +97,27 @@ const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () => void }
     return <div className="flex py-[5px] items-start">
         <div className="w-[20px] text-blue-500 pt-[5px]"><HiMiniMusicalNote className="w-[14px]" /></div>
         <div className="grow">
-            <span className={` cursor-pointer font-[500] text-gray-700`} onClick={() => { clearSearch(); openSongTab(_id) }}>{songs[_id].name}</span>
-            <div className="text-gray-400">{songs[_id].artist}</div>
+            <button 
+                style={{
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    textAlign: "left",
+                    width: '250px'
+
+                }} 
+                className={` cursor-pointer font-[500] text-gray-700`} onClick={() => { clearSearch(); openSongTab(_id) }}>
+                {songs[_id].name}
+            </button>
+            <div className="text-gray-400"
+                style={{
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    textAlign: "left",
+                    width: '250px'
+
+                }} >{songs[_id].artist}</div>
         </div>
         <div className="w-[20px]" onClick={() => activateDeleteModal(songs[_id])}>
             <HiOutlineTrash

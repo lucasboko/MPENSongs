@@ -2,7 +2,7 @@ import { FullScreenLyrics } from "../../components/fullScreenLyrics/fullScreenLy
 import { DeleteModal } from "../../components/saveModal/deleteModal"
 import { SaveModal } from "../../components/saveModal/saveModal"
 import { SavingLoadingSpinner } from "../../components/saveModal/savingLoadingSpinner"
-import { SideBar } from "../../components/sideBar/sideBar"
+import { Header } from "../../components/header/header"
 import { SongsTabs } from "../../components/songsTabs/songsTabs"
 import { TranslatorLoadingSpinner } from "../../components/translatorLoadingSpinner/translatorLoadingSpinner"
 import { useAppContext } from "../../context/appContext"
@@ -25,7 +25,7 @@ export const Dashboard = () => {
 
         <TranslatorLoadingSpinner />
         {fullScreenContent && <FullScreenLyrics />}
-        <SideBar />
+        <Header />
         <SongsTabs />
     </div>
 }
