@@ -90,7 +90,7 @@ export const Header = () => {
             </button>
         </div>
         {((searchFormik.values.search && filteredSongs.length) || showSongs)
-            && <div className="p-[10px] absolute w-[325px] border-t-1 border-r-1 border-gray-200 bottom-[55px] bg-white h-[50vh] overflow-y-auto rounded-t-xl"
+            && <div className="p-[10px] absolute w-[325px] border-t-1 border-r-1 border-gray-200 bottom-[55px] max-h-[70vh] bg-white overflow-y-auto rounded-t-xl"
                 style={{ scrollbarWidth: 'thin', scrollbarColor: '#ddd white' }}>
                 {
                     filteredSongs.map(song_id =>
