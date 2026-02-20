@@ -15,9 +15,9 @@ export const ActionsButtons = ({
 
     const copyLink = () => {
         navigator.clipboard.writeText(window.location.href).then(() => {
-            console.log("Copied the text: " + window.location.href);
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
+            // console.log("Copied the text: " + window.location.href);
+        }).catch(() => {
+            // console.error('Could not copy text: ', err);
         });
     }
 
