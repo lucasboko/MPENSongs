@@ -37,6 +37,11 @@ export type ContextType = {
 
     updateUrl: (_id: SongId | undefined) => void
 
+    isLoggedIn: boolean
+    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+    showLoginModal: boolean
+    setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
 export type SongId = string

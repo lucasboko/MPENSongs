@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router';
 import { useEffect, useState } from 'react'
 import { AppContext } from './context'
 import type { Song, SongId, SongsRecord } from './types'
-import { Dashboard, Login } from './components'
+import { Dashboard } from './components'
 import { getLoggedInUser } from './utilities';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -21,6 +21,8 @@ function App() {
 
   const [isTranslating, setIsTranslating] = useState<boolean>(false)
   const [isSavingSong, setIsSavingSong] = useState<boolean>(false)
+  const [showLoginModal, setLoginModal] = useState<boolean>(false)
+  const [isLoggedIn, setLoggedIn] = useState<boolean>(getLoggedInUser())
 
   const updateUrl = (_id: SongId | undefined) => {
 
@@ -271,8 +273,6 @@ function App() {
   }, [])
 
 
-  const isLoggedIn = getLoggedInUser()
-
   return (
     <>
       <AppContext.Provider value={{
@@ -302,11 +302,16 @@ function App() {
         isSavingSong,
         setIsSavingSong,
 
-        updateUrl
+        updateUrl,
+        isLoggedIn,
+        setLoggedIn,
+        showLoginModal, 
+        setLoginModal
 
       }}>
         <Routes>
-          <Route index element={isLoggedIn ? <Dashboard /> : <Login />} />
+          {/* <Route index element={isLoggedIn ? <Dashboard /> : <Login />} /> */}
+          <Route index element={<Dashboard />} />
         </Routes>
       </AppContext.Provider>
 

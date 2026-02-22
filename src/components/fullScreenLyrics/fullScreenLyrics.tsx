@@ -13,14 +13,16 @@ export const FullScreenLyrics = () => {
             body={
                 <div>
                     <TipTapEditor
-                        content={fullScreenContent || ""} hideSettings readOnly
+                        content={fullScreenContent || ""}
+                        hideSettings
+                        editable
                         bottomMargin={80}
                     />
                     <button
-                        className='z-20 top-[50px] right-[50px] absolute shadow-md/20 cursor-pointer p-[10px] bg-white-500 rounded-full hover:bg-blue-500 hover:text-yellow-400 '
+                        className='z-20 top-[50px] right-[50px] absolute cursor-pointer p-[10px] bg-white-500 rounded-full hover:bg-blue-500 hover:text-white'
                         onClick={() => setShowFullScreen(undefined)}
                     >
-                        <HiArrowsPointingIn className="size-4" />
+                        <HiArrowsPointingIn className="size-[18px]" />
                     </button>
                 </div>
             }

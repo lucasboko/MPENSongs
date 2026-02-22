@@ -4,6 +4,7 @@ import {
     FullScreenLyrics,
     SaveModal, 
     DeleteModal, 
+    LoginModal,
     SavingLoadingSpinner, 
     TranslatorLoadingSpinner 
 } from "../../components/"
@@ -20,6 +21,7 @@ export const Dashboard = () => {
             closeWithoutSave={() => { closeSongTab(saveModalIsActive?._id, true); activateSaveModal(undefined) }}
             save={saveSong}
         />
+        <LoginModal />
         <SavingLoadingSpinner />
         <DeleteModal  />
         <TranslatorLoadingSpinner />

@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { HiMiniPlus } from "react-icons/hi2";
-import { MdLogout } from "react-icons/md";
+import { MdLogout, MdLogin } from "react-icons/md";
 import mpenlogo from '../../assets/mpensongs128x128.png'
 import { useAppContext } from "../../context";
 import type { ContextType } from "../../types";
@@ -21,9 +20,9 @@ type SearchFormValues = {
 
 export const SearchBar = () => {
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    const { createNewSong, filteredSongs, filterSongs, updateUrl } = useAppContext() as ContextType
+    const { createNewSong, filteredSongs, filterSongs, setLoggedIn, isLoggedIn, setLoginModal } = useAppContext() as ContextType
 
     const searchFormik = useFormik<SearchFormValues>({
         initialValues: {
@@ -51,12 +50,19 @@ export const SearchBar = () => {
 
     const logout = () => {
         clearAuth()
-        updateUrl(undefined)
-        navigate(0)
+        setLoggedIn(false)
+        setLoginModal(false)
+        // updateUrl(undefined)
+        // navigate(0)
     }
 
     const [showSongs, setShowSongs] = useState<boolean>(false)
     const searchRef = useClickOutside(() => { setShowSongs(false) })
+
+    const oauth = {
+        func: isLoggedIn ? logout : () => setLoginModal(true),
+        Icon: isLoggedIn ? MdLogout : MdLogin
+    }
 
     return <div className="absolute w-full z-30 bottom-[0]" ref={searchRef as React.RefObject<HTMLDivElement>}  >
         <div className="flex gap-[5px] bg-white h-[55px] px-[15px] items-center">
@@ -76,19 +82,19 @@ export const SearchBar = () => {
                     className="outline-0 px-[5px] w-full"
                 />
             </div>
-            <button
+            {isLoggedIn && <button
                 type="button"
-                className="flex cursor-pointer p-[9px] bg-yellow-500 rounded-full items-center justify-center"
+                className="flex cursor-pointer p-[6px] bg-yellow-500 rounded-full items-center justify-center"
                 onClick={() => { setShowSongs(false); handleChange(''); createNewSong() }}
             >
                 <HiMiniPlus className="size-[20px] text-white" />
-            </button>
+            </button>}
             <button
                 type="button"
-                className="flex cursor-pointer p-[9px] items-center justify-center"
-                onClick={logout}
+                className="flex cursor-pointer p-[9px] items-center justify-center text-gray-500"
+                onClick={oauth.func}
             >
-                <MdLogout className="size-[20px]" />
+                <oauth.Icon className="size-[18px]" />
             </button>
         </div>
         {(filteredSongs.length && showSongs)

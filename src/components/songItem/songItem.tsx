@@ -4,7 +4,7 @@ import type { ContextType } from "../../types";
 
 export const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () => void }) => {
 
-    const { songs, openSongTab, activateDeleteModal } = useAppContext() as ContextType
+    const { songs, openSongTab, activateDeleteModal, isLoggedIn } = useAppContext() as ContextType
 
     return <div className="flex py-[5px] items-start ">
         <div className="w-[20px] text-blue-500 pt-[5px]"><HiMiniMusicalNote className="w-[14px]" /></div>
@@ -29,11 +29,11 @@ export const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () =>
                     width: '250px'
                 }} >{songs[_id].artist}</div>
         </div>
-        <div className="w-[20px]" onClick={() => activateDeleteModal(songs[_id])}>
+        {isLoggedIn  && <div className="w-[20px]" onClick={() => activateDeleteModal(songs[_id])}>
             <HiOutlineTrash
                 className="w-[12px] cursor-pointer text-gray-300 hover:text-red-500"
                 onClick={() => activateDeleteModal(songs[_id])}
             />
-        </div>
+        </div>}
     </div>
 }

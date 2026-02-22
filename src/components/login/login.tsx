@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import mpenlogo from '../../assets/MPENINTERNATIONAL.png'
 import { Input } from "../../components";
-import { authenticate, setAuth } from "../../utilities";
+import { authenticate, setAuth, getLoggedInUser } from "../../utilities";
+import { useAppContext } from "../../context";
+import type { ContextType } from "../../types";
 
 const loginFormSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
@@ -15,7 +16,7 @@ type LoginFormValues = {
 
 export const Login = () => {
 
-    const navigate = useNavigate()
+    const { setLoginModal, setLoggedIn } = useAppContext() as ContextType
     
     const loginFormik = useFormik<LoginFormValues>({
         initialValues: {
@@ -27,10 +28,10 @@ export const Login = () => {
             actions.setSubmitting(true)
 
             const res = await authenticate(values.password)
-            console.log(res)
             if (res !== "Mot de passe invalide") {
                 setAuth(res)
-                navigate(0)
+                setLoggedIn(getLoggedInUser())
+                setLoginModal(false)
             } else {
                 actions.setErrors({ password: res })
 
@@ -49,16 +50,16 @@ export const Login = () => {
 
 
     return (
-        <div className="w-screen h-screen grid">
-            <form className="flex flex-col gap-[30px] w-[300px] items-center justify-self-center border-0 m-auto" 
+        <div className="grid">
+            <form className="flex flex-col gap-[10px] py-[20px]  items-center justify-self-center border-0 m-auto" 
             onSubmit={loginFormik.handleSubmit}>
                 
-                <div className="flex ">
-                    <img src={mpenlogo} alt="App Logo" width="90" />
+                <div className="flex mb-[20px]">
+                    <img src={mpenlogo} alt="App Logo" width="70" />
                     <div className="border-l-1 border-gray-400 h-[30px] pt-[3px] align-middle pl-[10px]">Songs</div>
                 </div>
                 <Input
-                    className="w-[300px] outline-0 border-0 text-center"
+                    className="w-full outline-0 border-0 text-center"
                     name="password"
                     type={"password"}
                     placeholder="Entrer mot de passe"
@@ -70,9 +71,16 @@ export const Login = () => {
 
                 <button
                     type="submit"
-                    className="outline-0 bg-white text-blue-500 font-bold w-full cursor-pointer"
+                    className="outline-0 bg-white text-blue-500 font-bold cursor-pointer"
                 >
                     Connecter
+                </button>
+                <button
+                    type="button"
+                    className="outline-0 bg-white text-gray-500 cursor-pointer "
+                    onClick={() => { loginFormik.resetForm(); setLoginModal(false) }}
+                >
+                    Annuler
                 </button>
             </form>
         </div>

@@ -13,3 +13,4 @@ export { SavingLoadingSpinner } from './utilityModals/savingLoadingSpinner'
 export { SongItem } from './songItem/songItem'
 export { Dashboard } from './dashboard/dashboard'
 export { Login } from './login/login';
+export { LoginModal } from './utilityModals/loginModal';

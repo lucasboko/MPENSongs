@@ -4,12 +4,13 @@ import { useAppContext } from "../../context"
 import { translator } from "../../utilities"
 
 export const ActionsButtons = ({
-    song, setTransltorContent }: {
+    song, setTransltorContent, isLoggedIn }: {
         song: Song
+        isLoggedIn: boolean
         setTransltorContent: React.Dispatch<React.SetStateAction<string>>
     }) => {
 
-    const activeEffect = `p-[8px] shadow-md/20 cursor-pointer p-[10px] bg-white-500 rounded-full bg-white hover:bg-blue-500 hover:text-white`
+    const styling = `p-[8px] cursor-pointer p-[10px] bg-white-500 rounded-full text-gray-600 bg-white hover:bg-blue-500 hover:text-white `
 
     const { setShowFullScreen, setIsTranslating, activateDeleteModal } = useAppContext() as ContextType
 
@@ -41,32 +42,36 @@ export const ActionsButtons = ({
     return <>
         <button
             type="button"
-            className={activeEffect}
-            onClick={runTranslation}
-        >
-            <HiLanguage className="size-[18px]" />
-        </button>
-        <button
-            type="button"
-            className={activeEffect}
+            className={styling}
             onClick={copyLink}
         >
             <HiMiniArrowUpTray className="size-[18px]" />
         </button>
         <button
             type="button"
-            className={activeEffect}
+            className={styling}
             onClick={() => setShowFullScreen(song?.lyrics)}
         >
             <HiArrowsPointingOut className="size-[18px]" />
         </button>
+        {
+            isLoggedIn && <>
+                <button
+                    type="button"
+                    className={styling}
+                    onClick={runTranslation}
+                >
+                    <HiLanguage className="size-[18px]" />
+                </button>
 
-        <button
-            type="button"
-            className={activeEffect}
-            onClick={() => activateDeleteModal(song)}
-        >
-            <HiOutlineTrash className="size-[18px]" />
-        </button>
+                <button
+                    type="button"
+                    className={styling}
+                    onClick={() => activateDeleteModal(song)}
+                >
+                    <HiOutlineTrash className="size-[18px]" />
+                </button>
+            </>
+        }
     </>
 }

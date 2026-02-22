@@ -34,11 +34,12 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 
 
 export const TipTapEditor = ({
-  content, transltorContent, hideSettings, handleChange, readOnly, bottomMargin
+  content, transltorContent, hideSettings, handleChange, editable, bottomMargin
 }: {
   content: string | false | undefined,
   transltorContent?: string | false | undefined,
-  hideSettings?: boolean, readOnly?: boolean,
+  hideSettings?: boolean, 
+  editable?: boolean,
   handleChange?: (value: string, fieldName: string) => void
   bottomMargin?: number
 }) => {
@@ -55,7 +56,7 @@ export const TipTapEditor = ({
         placeholder: 'Saisir les paroles ici...',
       }),
     ],
-    editable: !readOnly,
+    editable: editable,
     content: content || '',
     onUpdate: ({ editor }) => handleChange ? handleChange(editor.getHTML(), 'lyrics') : {},
   })
@@ -67,7 +68,7 @@ export const TipTapEditor = ({
   
   return (
     <div className='relative'>
-      {!hideSettings && <MenuBar editor={editor} />}
+      {(!hideSettings && editable) && <MenuBar editor={editor} />}
       <div className=" bg-white overflow-y-scroll pr-[30px]" 
         style={{ height: `${height}px`, scrollbarWidth: 'thin', scrollbarColor: '#eee white' }}>
         <EditorContent editor={editor} />

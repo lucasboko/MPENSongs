@@ -24,7 +24,7 @@ type SongFormValueType = {
 
 export const Content = ({ song }: { song: Song }) => {
 
-    const { updateTab, saveSong, songs } = useAppContext() as ContextType
+    const { updateTab, saveSong, songs, isLoggedIn } = useAppContext() as ContextType
     const [transltorContent, setTransltorContent] = useState<string>('')
 
     const validateFunction = async (values: SongFormValueType) => {
@@ -81,6 +81,7 @@ export const Content = ({ song }: { song: Song }) => {
                     error={<div style={{ fontSize: '12px' }}>{showError("name")}</div>}
                     className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300"
                     wrapperStyling='md:w-[50%]'
+                    readOnly={isLoggedIn}
                 />
                 <Input
                     name="artist"
@@ -90,6 +91,7 @@ export const Content = ({ song }: { song: Song }) => {
                     error={<div style={{ fontSize: '9px' }}>{showError("artist")}</div>}
                     className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300"
                     wrapperStyling='md:w-[50%]'
+                    readOnly={isLoggedIn}
                 />
             </div>
 
@@ -99,15 +101,16 @@ export const Content = ({ song }: { song: Song }) => {
                     handleChange={handleChange}
                     transltorContent={transltorContent}
                     bottomMargin={160}
+                    editable={isLoggedIn}
                 />
             </div>
 
             {
                 song
                     ? <div className="flex flex-col lg:absolute md:fixed fixed  bottom-[70px] lg:bottom-[10px] md:bottom-[70px] right-[10px] gap-[10px]">
-                        <ActionsButtons song={song} setTransltorContent={setTransltorContent} />
+                        <ActionsButtons song={song} setTransltorContent={setTransltorContent} isLoggedIn={isLoggedIn} />
                         {
-                            song.touched
+                            (song.touched && isLoggedIn)
                                 ? <button
                                     type="submit"
                                     className={`bg-blue-500 text-white hover:text-yellow-400 shadow-md/20 cursor-pointer p-[10px] rounded-full`}

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { SignJWT } from "jose"
 
-export const getLoggedInUser = () => sessionStorage.getItem('logged_in_user') || undefined
+export const getLoggedInUser = () => sessionStorage.getItem('logged_in_user') ? true : false
 
 export const setAuth = (value: string) => sessionStorage.setItem('logged_in_user', value)
 
