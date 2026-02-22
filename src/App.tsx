@@ -105,7 +105,7 @@ function App() {
           ...openedSong,
           [data._id]: { ...data, touched: false }
         })
-        setFilteredSongs([...filteredSongs, data._id])
+        // setFilteredSongs([...filteredSongs, data._id])
 
         setTab(data)
 
