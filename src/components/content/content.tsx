@@ -12,8 +12,7 @@ const songFormSchema = Yup.object().shape({
     name: Yup.string().min(2, 'Nom invalide').required('Nom invalide').trim(),
     artist: Yup.string().min(2, 'Artiste invalide').required('Artiste invalide').trim(),
     lyrics: Yup.string(),
-    album: Yup.string(),
-    duplicate: Yup.bool()
+    album: Yup.string()
 });
 
 type SongFormValueType = {
@@ -40,8 +39,8 @@ export const Content = ({ song }: { song: Song }) => {
             const find = Object.keys(songs).filter(
                 _id => trimer(songs[_id].name).includes(trimer(name)) &&
                     trimer(songs[_id].artist).includes(trimer(artist))
-            ).length < 1
-
+            ).length > 0
+            
             errors = {
                 ...errors,
                 ...(find && { name: `Ce duo [titre et artiste] existe déjà` })
@@ -57,13 +56,13 @@ export const Content = ({ song }: { song: Song }) => {
         validationSchema: songFormSchema,
         validate: validateFunction,
         onSubmit: async (values, actions) => {
-            const toSave = {
+            const {touched, ...toSave} = {
                 ...values,
                 name: values.name?.trimEnd().trimStart(),
                 artist: values.artist?.trimEnd().trimStart()
             }
-            saveSong(toSave)
-            actions.setValues(toSave, false)
+            saveSong(values)
+            actions.resetForm({ values: toSave })
         }
         
     });
@@ -71,10 +70,7 @@ export const Content = ({ song }: { song: Song }) => {
     const handleChange =
         (value: string, fieldName: string) => {
             songFormik.setFieldValue(fieldName, value, true)
-            if(songFormik.dirty) {
-                console.log(songFormik.dirty)
-                updateTab({ ...song, [fieldName]: value, touched: true })
-            }
+            updateTab({ ...song, [fieldName]: value, touched: true })
         }
 
 
@@ -92,7 +88,7 @@ export const Content = ({ song }: { song: Song }) => {
                     onChange={val => handleChange(val, "name")}
                     value={songFormik.values.name}
                     error={<div style={{ fontSize: '12px' }}>{showError("name")}</div>}
-                    className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300"
+                    className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300 text-blue-500"
                     wrapperStyling='md:w-[50%]'
                     readOnly={!isLoggedIn}
                 />
@@ -102,7 +98,7 @@ export const Content = ({ song }: { song: Song }) => {
                     onChange={val => handleChange(val, "artist")}
                     value={songFormik.values.artist}
                     error={<div style={{ fontSize: '9px' }}>{showError("artist")}</div>}
-                    className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300"
+                    className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300 text-blue-500"
                     wrapperStyling='md:w-[50%]'
                     readOnly={!isLoggedIn}
                 />
