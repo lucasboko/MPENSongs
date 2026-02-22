@@ -26,12 +26,12 @@ export const Login = () => {
         onSubmit: async (values, actions) => {
             
             actions.setSubmitting(true)
-
             const res = await authenticate(values.password)
             if (res !== "Mot de passe invalide") {
                 setAuth(res)
                 setLoggedIn(getLoggedInUser())
                 setLoginModal(false)
+                loginFormik.resetForm();
             } else {
                 actions.setErrors({ password: res })
 
