@@ -1,4 +1,5 @@
-export { useClickOutside } from './useClickOutside'
+export { useClickOutside } from './hooks'
+export { trimer } from './toolkit'
 export { translator } from './geminiTranslator'
 export { 
     setAuth,

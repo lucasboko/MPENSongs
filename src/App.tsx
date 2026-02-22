@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { AppContext } from './context'
 import type { Song, SongId, SongsRecord } from './types'
 import { Dashboard } from './components'
-import { getLoggedInUser } from './utilities';
+import { getLoggedInUser, trimer } from './utilities';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -58,8 +58,7 @@ function App() {
       }
     }
   }
-
-  const trimer = (s: string | undefined) => s ? s.trim().replace(/[^a-zA-Z]/g, '').toLowerCase() : '';
+  
   const filterSongs = (searchText: string) => {
 
     if (searchText) {

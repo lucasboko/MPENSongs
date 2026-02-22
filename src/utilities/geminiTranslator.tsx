@@ -19,7 +19,7 @@ export const translator = async (param: Param) => {
     2. if it is french translate to english and mandarin
     3. if it is enlgish translate to french and mandarin
     4. wrap translated sentences in parenthesis and <p> tag
-    5. wrap the other sentences <strong> tag
+    5. wrap the other sentences with <strong> tag
     `
 
     const response = await ai.models.generateContent({

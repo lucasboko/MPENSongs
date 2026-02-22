@@ -1,0 +1,1 @@
+export const trimer = (s: string | undefined) => s ? s.trim().replace(/[^a-zA-Z]/g, '').toLowerCase() : '';

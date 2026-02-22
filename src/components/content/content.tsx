@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Input, ActionsButtons, TipTapEditor } from "../../components"
 import type { ContextType, Song } from "../../types";
 import { useAppContext } from "../../context";
+import { trimer } from "../../utilities";
 
 const songFormSchema = Yup.object().shape({
     name: Yup.string().min(2, 'Nom invalide').required('Nom invalide').trim(),
@@ -37,8 +38,8 @@ export const Content = ({ song }: { song: Song }) => {
         if (isValid && name && artist) {
 
             const find = Object.keys(songs).filter(
-                _id => songs[_id].name?.trim().toLowerCase().includes(name.trim().toLowerCase()) &&
-                    songs[_id].artist?.trim().toLowerCase().includes(artist.trim().toLowerCase())
+                _id => trimer(songs[_id].name).includes(trimer(name)) &&
+                    trimer(songs[_id].artist).includes(trimer(artist))
             ).length < 1
 
             errors = {
@@ -55,13 +56,25 @@ export const Content = ({ song }: { song: Song }) => {
         initialValues: song,
         validationSchema: songFormSchema,
         validate: validateFunction,
-        onSubmit: async (values) => saveSong({ ...values }),
+        onSubmit: async (values, actions) => {
+            const toSave = {
+                ...values,
+                name: values.name?.trimEnd().trimStart(),
+                artist: values.artist?.trimEnd().trimStart()
+            }
+            saveSong(toSave)
+            actions.setValues(toSave, false)
+        }
+        
     });
 
     const handleChange =
         (value: string, fieldName: string) => {
             songFormik.setFieldValue(fieldName, value, true)
-            updateTab({ ...song, [fieldName]: value, touched: true })
+            if(songFormik.dirty) {
+                console.log(songFormik.dirty)
+                updateTab({ ...song, [fieldName]: value, touched: true })
+            }
         }
 
 
@@ -110,7 +123,7 @@ export const Content = ({ song }: { song: Song }) => {
                     ? <div className="flex flex-col lg:absolute md:fixed fixed  bottom-[70px] lg:bottom-[10px] md:bottom-[70px] right-[10px] gap-[10px]">
                         <ActionsButtons song={song} setTransltorContent={setTransltorContent} isLoggedIn={isLoggedIn} />
                         {
-                            (song.touched && isLoggedIn)
+                            (songFormik.dirty && isLoggedIn)
                                 ? <button
                                     type="submit"
                                     className={`bg-blue-500 text-white hover:text-yellow-400 shadow-md/20 cursor-pointer p-[10px] rounded-full`}
