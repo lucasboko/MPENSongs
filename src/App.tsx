@@ -2,10 +2,8 @@ import { Route, Routes } from 'react-router';
 import { useEffect, useState } from 'react'
 import { AppContext } from './context'
 import type { Song, SongId, SongsRecord } from './types'
-
+import { Dashboard, Login } from './components'
 import { getLoggedInUser } from './utilities';
-import { Dashboard } from './pages/dashboard/dashboard';
-import { Login } from './pages/login/login';
 
 const API_URL = import.meta.env.VITE_API_URL;
 

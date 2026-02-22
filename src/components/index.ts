@@ -11,3 +11,5 @@ export { SaveModal } from './utilityModals/saveModal'
 export { DeleteModal } from './utilityModals/deleteModal'
 export { SavingLoadingSpinner } from './utilityModals/savingLoadingSpinner'
 export { SongItem } from './songItem/songItem'
+export { Dashboard } from './dashboard/dashboard'
+export { Login } from './login/login';
