@@ -79,7 +79,6 @@ export const Content = ({ song }: { song: Song }) => {
         : undefined
 
 
-    console.log(songFormik.errors)
     return <form className="align-self-top" onSubmit={songFormik.handleSubmit}>
         <div className="relative">
             <div className="w-full md:flex flex-row gap-[30px] px-[10px]">
