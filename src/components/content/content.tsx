@@ -24,37 +24,37 @@ type SongFormValueType = {
 
 export const Content = ({ song }: { song: Song }) => {
 
-    const { updateTab, saveSong, songs, isLoggedIn } = useAppContext() as ContextType
+    const { updateTab, saveSong, isLoggedIn } = useAppContext() as ContextType
     const [transltorContent, setTransltorContent] = useState<string>('')
 
-    const validateFunction = async (values: SongFormValueType) => {
-        let errors = {};
+    // const validateFunction = async (values: SongFormValueType) => {
+    //     let errors = {};
 
-        const isValid = await songFormSchema.isValid(values);
-        const name = values.name
-        const artist = values.artist
+    //     const isValid = await songFormSchema.isValid(values);
+    //     const name = values.name
+    //     const artist = values.artist
 
-        if (isValid && name && artist) {
+    //     if (isValid && name && artist) {
 
-            const find = Object.keys(songs).filter(
-                _id => trimer(songs[_id].name) === trimer(name) &&
-                    trimer(songs[_id].artist) === trimer(artist)
-            ).length > 0
+    //         const find = Object.keys(songs).filter(
+    //             _id => trimer(songs[_id].name) === trimer(name) &&
+    //                 trimer(songs[_id].artist) === trimer(artist)
+    //         ).length > 0
             
-            errors = {
-                ...errors,
-                ...(find && { name: `Ce duo [titre et artiste] existe déjà` })
-            }
-        }
+    //         errors = {
+    //             ...errors,
+    //             ...(find && { name: `Ce duo [titre et artiste] existe déjà` })
+    //         }
+    //     }
 
-        return errors;
+    //     return errors;
 
-    };
+    // };
 
     const songFormik = useFormik<Song>({
         initialValues: song,
         validationSchema: songFormSchema,
-        validate: validateFunction,
+        // validate: validateFunction,
         onSubmit: async (values, actions) => {
             const {touched, ...toSave} = {
                 ...values,
