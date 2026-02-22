@@ -37,8 +37,8 @@ export const Content = ({ song }: { song: Song }) => {
         if (isValid && name && artist) {
 
             const find = Object.keys(songs).filter(
-                _id => trimer(songs[_id].name).includes(trimer(name)) &&
-                    trimer(songs[_id].artist).includes(trimer(artist))
+                _id => trimer(songs[_id].name) === trimer(name) &&
+                    trimer(songs[_id].artist) === trimer(artist)
             ).length > 0
             
             errors = {
@@ -79,6 +79,7 @@ export const Content = ({ song }: { song: Song }) => {
         : undefined
 
 
+    console.log(songFormik.errors)
     return <form className="align-self-top" onSubmit={songFormik.handleSubmit}>
         <div className="relative">
             <div className="w-full md:flex flex-row gap-[30px] px-[10px]">
