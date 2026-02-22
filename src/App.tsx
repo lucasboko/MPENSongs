@@ -1,10 +1,9 @@
 import { Route, Routes } from 'react-router';
 import { useEffect, useState } from 'react'
-import { AppContext } from './context/appContext'
-import type { Song, SongId, SongsRecord } from './types/types'
-import { Dashboard } from './pages/Dashboard/dashboard'
-import { getLoggedInUser } from './utilities/utilities';
-import { Login } from './pages/Login/login';
+import { AppContext } from './context'
+import type { Song, SongId, SongsRecord } from './types'
+import { Dashboard, Login } from './pages'
+import { getLoggedInUser } from './utilities';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -58,13 +57,15 @@ function App() {
     }
   }
 
+  const trimer = (s: string | undefined) => s ? s.trim().replace(/[^a-zA-Z]/g, '').toLowerCase() : '';
   const filterSongs = (searchText: string) => {
 
     if (searchText) {
       setFilteredSongs(
         Object.keys(songs).filter(
-          _id => songs[_id].name?.toLowerCase().includes(searchText.toLowerCase()) ||
-            songs[_id].lyrics?.toLowerCase().includes(searchText.toLowerCase())
+          _id => trimer(songs[_id].name).includes(trimer(searchText)) ||
+            trimer(songs[_id].lyrics).includes(trimer(searchText)) || 
+              trimer(songs[_id].artist).includes(trimer(searchText))
         )
       )
     } else {

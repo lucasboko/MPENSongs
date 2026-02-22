@@ -1,6 +1,5 @@
 import type { ReactElement } from "react"
 
-
 type ModalType = {
     header?: ReactElement
     footer?: ReactElement

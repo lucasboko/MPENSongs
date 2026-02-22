@@ -1,6 +1,6 @@
-import { useAppContext } from "../../context/appContext"
-import type { ContextType } from "../../types/types"
-import { Modal } from "../modal/modal"
+import { useAppContext } from "../../context"
+import type { ContextType } from "../../types"
+import { Modal } from "../../components"
 
 export const TranslatorLoadingSpinner = () => {
 

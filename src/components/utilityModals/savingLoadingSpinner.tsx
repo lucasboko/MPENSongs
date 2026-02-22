@@ -1,6 +1,6 @@
-import type { ContextType } from '../../types/types';
-import { useAppContext } from '../../context/appContext';
-import { Modal } from '../modal/modal';
+import type { ContextType } from '../../types';
+import { useAppContext } from '../../context';
+import { Modal } from '../../components';
 
 export const SavingLoadingSpinner = () => {
 

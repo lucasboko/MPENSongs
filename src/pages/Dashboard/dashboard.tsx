@@ -1,12 +1,14 @@
-import { FullScreenLyrics } from "../../components/fullScreenLyrics/fullScreenLyrics"
-import { DeleteModal } from "../../components/saveModal/deleteModal"
-import { SaveModal } from "../../components/saveModal/saveModal"
-import { SavingLoadingSpinner } from "../../components/saveModal/savingLoadingSpinner"
-import { Header } from "../../components/header/header"
-import { SongsTabs } from "../../components/songsTabs/songsTabs"
-import { TranslatorLoadingSpinner } from "../../components/translatorLoadingSpinner/translatorLoadingSpinner"
-import { useAppContext } from "../../context/appContext"
-import type { ContextType } from "../../types/types"
+import { 
+    SearchBar,
+    SongsTabs,
+    FullScreenLyrics,
+    SaveModal, 
+    DeleteModal, 
+    SavingLoadingSpinner, 
+    TranslatorLoadingSpinner 
+} from "../../components/"
+import { useAppContext } from "../../context"
+import type { ContextType } from "../../types"
 
 
 export const Dashboard = () => {
@@ -18,14 +20,12 @@ export const Dashboard = () => {
             closeWithoutSave={() => { closeSongTab(saveModalIsActive?._id, true); activateSaveModal(undefined) }}
             save={saveSong}
         />
-
         <SavingLoadingSpinner />
-
         <DeleteModal  />
-
         <TranslatorLoadingSpinner />
         {fullScreenContent && <FullScreenLyrics />}
-        <Header />
+        
+        <SearchBar />
         <SongsTabs />
     </div>
 }

@@ -68,6 +68,6 @@ export const Input = (props: InputProps) => {
                 ${customStyling}
             `}
         />
-        <div className="text-[10px] text-red-700">{error}</div>
+        <div className="text-[10px] text-red-500">{error}</div>
     </div>
 }

@@ -2,8 +2,8 @@ import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import mpenlogo from '../../assets/MPENINTERNATIONAL.png'
-import { Input } from "../../components/input/input";
-import { authenticate, setAuth } from "../../utilities/utilities";
+import { Input } from "../../components";
+import { authenticate, setAuth } from "../../utilities";
 
 const loginFormSchema = Yup.object().shape({
     password: Yup.string().required('Required'),

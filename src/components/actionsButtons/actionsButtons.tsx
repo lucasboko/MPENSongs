@@ -1,7 +1,7 @@
 import { HiArrowsPointingOut, HiLanguage, HiMiniArrowUpTray, HiOutlineTrash } from "react-icons/hi2"
-import type { ContextType, Song } from "../../types/types"
-import { useAppContext } from "../../context/appContext"
-import { translator } from "../../utilities/geminiTranslator"
+import type { ContextType, Song } from "../../types"
+import { useAppContext } from "../../context"
+import { translator } from "../../utilities"
 
 export const ActionsButtons = ({
     song, setTransltorContent }: {

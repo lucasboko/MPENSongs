@@ -13,7 +13,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
   }
   
   return (
-    <div className="bg-white z-30 absolute right-[5px] flex flex-col items-center text-center w-[20px] p-[15px] menu-bar shadow-xs/20 rounded-full gap-[10px]">
+    <div className="bg-white z-30 absolute right-[10px] flex flex-col items-center text-center w-[20px] p-[15px] menu-bar shadow-xs/10 rounded-full gap-[10px]">
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
@@ -34,17 +34,18 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 
 
 export const TipTapEditor = ({
-  content, transltorContent, hideSettings, handleChange, readOnly
+  content, transltorContent, hideSettings, handleChange, readOnly, bottomMargin
 }: {
   content: string | false | undefined,
   transltorContent?: string | false | undefined,
   hideSettings?: boolean, readOnly?: boolean,
   handleChange?: (value: string, fieldName: string) => void
+  bottomMargin?: number
 }) => {
 
-  const [height, setHeigh] = useState(window.innerHeight - 120);
+  const [height, setHeigh] = useState(window.innerHeight - (bottomMargin || 0));
   useEffect(() => {
-    window.addEventListener('resize', () => setHeigh(window.innerHeight - 120));
+    window.addEventListener('resize', () => setHeigh(window.innerHeight - (bottomMargin || 0)));
   });
 
   const editor = useEditor({
