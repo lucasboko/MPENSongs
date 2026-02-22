@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { Input, ActionsButtons, TipTapEditor } from "../../components"
 import type { ContextType, Song } from "../../types";
 import { useAppContext } from "../../context";
-import { trimer } from "../../utilities";
+// import { trimer } from "../../utilities";
 
 const songFormSchema = Yup.object().shape({
     name: Yup.string().min(2, 'Nom invalide').required('Nom invalide').trim(),
@@ -15,12 +15,12 @@ const songFormSchema = Yup.object().shape({
     album: Yup.string()
 });
 
-type SongFormValueType = {
-    name?: string,
-    artist?: string,
-    lyrics?: string,
-    album?: string,
-}
+// type SongFormValueType = {
+//     name?: string,
+//     artist?: string,
+//     lyrics?: string,
+//     album?: string,
+// }
 
 export const Content = ({ song }: { song: Song }) => {
 
