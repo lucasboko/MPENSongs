@@ -81,7 +81,7 @@ export const Content = ({ song }: { song: Song }) => {
                     error={<div style={{ fontSize: '12px' }}>{showError("name")}</div>}
                     className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300"
                     wrapperStyling='md:w-[50%]'
-                    readOnly={isLoggedIn}
+                    readOnly={!isLoggedIn}
                 />
                 <Input
                     name="artist"
@@ -91,7 +91,7 @@ export const Content = ({ song }: { song: Song }) => {
                     error={<div style={{ fontSize: '9px' }}>{showError("artist")}</div>}
                     className="w-full outline-0 pb-[3px] pt-[10px] border-b-1 border-dashed border-gray-300"
                     wrapperStyling='md:w-[50%]'
-                    readOnly={isLoggedIn}
+                    readOnly={!isLoggedIn}
                 />
             </div>
 
