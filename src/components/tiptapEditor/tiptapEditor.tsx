@@ -65,6 +65,10 @@ export const TipTapEditor = ({
     if (transltorContent)
       editor?.commands.setContent(transltorContent?.toString() || '');
   }, [transltorContent, editor]);
+
+  useEffect(() => {
+    editor?.commands.setContent(content || '')
+  }, [content]);
   
   return (
     <div className='relative'>

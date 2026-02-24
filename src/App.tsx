@@ -15,6 +15,8 @@ function App() {
   const [openedSong, addOpenSong] = useState<SongsRecord>({})
   const [fullScreenContent, setShowFullScreen] = useState<string | undefined>('')
 
+  const [notifications, setNotifications] = useState<SongId[]>([])
+
   const [tab, setTab] = useState<Song | undefined>(undefined)
   const [saveModalIsActive, activateSaveModal] = useState<Song | undefined>(undefined)
   const [deleteModalIsActive, activateDeleteModal] = useState<Song | undefined>(undefined)
@@ -58,15 +60,15 @@ function App() {
       }
     }
   }
-  
+
   const filterSongs = (searchText: string) => {
 
     if (searchText) {
       setFilteredSongs(
         Object.keys(songs).filter(
           _id => trimer(songs[_id].name).includes(trimer(searchText)) ||
-            trimer(songs[_id].lyrics).includes(trimer(searchText)) || 
-              trimer(songs[_id].artist).includes(trimer(searchText))
+            trimer(songs[_id].lyrics).includes(trimer(searchText)) ||
+            trimer(songs[_id].artist).includes(trimer(searchText))
         )
       )
     } else {
@@ -271,6 +273,50 @@ function App() {
     loadSongs()
   }, [])
 
+  useEffect(() => {
+    // when songs are updated, refresh the filtered songs as well
+    // to incorporate new updates.
+
+  }, [songs]);
+
+  const msSockerOnCreateOrUpdateSong = (event: MessageEvent) => {
+
+    const message = JSON.parse(JSON.parse(event.data))
+
+    if (["new_song", "updated_song"].includes(message?.status)) {
+
+      setSongs(prev => ({ ...prev, [message.song._id]: { ...message.song, touched: false } }))
+
+      addOpenSong(prev => ({
+        ...prev,
+        ...(prev[message.song._id] && { [message.song._id]: { ...message.song, touched: false } })
+      }))
+
+      setTab(prev =>
+        (prev && prev._id === message.song._id)
+          ? { ...prev, ...message.song }
+          : prev
+      );
+
+      setNotifications(prev => [...prev, `${message.song.name}`])
+
+    }
+  }
+
+
+  useEffect(() => {
+    const ms_socket = new WebSocket(`${import.meta.env.VITE_SERVER_URL}/mpensongsws`);
+
+    // ms_socket.onopen = () => console.log('ms_socket opened');
+    // ms_socket.onclose = () => console.log('ms_socket closed');
+    ms_socket.onmessage = msSockerOnCreateOrUpdateSong
+
+    return () => {
+      ms_socket.close();
+    }
+
+  }, []);
+
 
   return (
     <>
@@ -280,6 +326,8 @@ function App() {
         openedSong, addOpenSong,
         filteredSongs, setFilteredSongs,
         fullScreenContent, setShowFullScreen,
+
+        notifications, setNotifications,
 
         filterSongs,
         openSongTab,
@@ -304,7 +352,7 @@ function App() {
         updateUrl,
         isLoggedIn,
         setLoggedIn,
-        showLoginModal, 
+        showLoginModal,
         setLoginModal
 
       }}>

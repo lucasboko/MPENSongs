@@ -1,4 +1,4 @@
-import { HiArrowsPointingOut, HiLanguage, HiMiniArrowUpTray, HiOutlineTrash } from "react-icons/hi2"
+import { HiArrowsPointingOut, HiLanguage, HiLink, HiOutlineTrash } from "react-icons/hi2"
 import type { ContextType, Song } from "../../types"
 import { useAppContext } from "../../context"
 import { translator } from "../../utilities"
@@ -10,7 +10,7 @@ export const ActionsButtons = ({
         setTransltorContent: React.Dispatch<React.SetStateAction<string>>
     }) => {
 
-    const styling = `p-[8px] cursor-pointer p-[10px] bg-white-500 rounded-full text-gray-600 bg-white hover:bg-blue-500 hover:text-white `
+    const styling = `p-[8px] cursor-pointer p-[10px] bg-white-500 rounded-full text-gray-600 bg-white hover:text-white`
 
     const { setShowFullScreen, setIsTranslating, activateDeleteModal } = useAppContext() as ContextType
 
@@ -42,15 +42,17 @@ export const ActionsButtons = ({
     return <>
         <button
             type="button"
-            className={styling}
+            className={`${styling} hover:bg-blue-500`}
             onClick={copyLink}
+            title="Copier le lien de cette chanson"
         >
-            <HiMiniArrowUpTray className="size-[18px]" />
+            <HiLink className="size-[18px]" />
         </button>
         <button
             type="button"
-            className={styling}
+            className={`${styling} hover:bg-blue-500`}
             onClick={() => setShowFullScreen(song?.lyrics)}
+            title="Afficher en plein écran"
         >
             <HiArrowsPointingOut className="size-[18px]" />
         </button>
@@ -58,16 +60,18 @@ export const ActionsButtons = ({
             isLoggedIn && <>
                 <button
                     type="button"
-                    className={styling}
+                    className={`${styling} hover:bg-blue-500`}
                     onClick={runTranslation}
+                    title="Traduire cette chanson"
                 >
                     <HiLanguage className="size-[18px]" />
                 </button>
 
                 <button
                     type="button"
-                    className={styling}
+                    className={`${styling} hover:bg-red-500`}
                     onClick={() => activateDeleteModal(song)}
+                    title="Supprimer cette chanson"
                 >
                     <HiOutlineTrash className="size-[18px]" />
                 </button>

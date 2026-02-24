@@ -10,6 +10,7 @@ export const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () =>
         <div className="w-[20px] text-blue-500 pt-[5px]"><HiMiniMusicalNote className="w-[14px]" /></div>
         <div className="grow">
             <button
+                title={`Ourvrir + ${songs[_id].name}`}
                 style={{
                     overflow: "hidden",
                     whiteSpace: "nowrap",
@@ -31,6 +32,7 @@ export const SongItem = ({ _id, clearSearch }: { _id: string, clearSearch: () =>
         </div>
         {isLoggedIn  && <div className="w-[20px]" onClick={() => activateDeleteModal(songs[_id])}>
             <HiOutlineTrash
+                title={`Supprimer + ${songs[_id].name}`}
                 className="w-[12px] cursor-pointer text-gray-300 hover:text-red-500"
                 onClick={() => activateDeleteModal(songs[_id])}
             />

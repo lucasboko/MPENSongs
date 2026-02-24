@@ -13,10 +13,12 @@
     "@google/genai": "^1.41.0",
     "@material-tailwind/react": "^2.1.10",
     "@tailwindcss/vite": "^4.1.18",
+    "@tiptap/extension-collaboration": "^3.20.0",
     "@tiptap/extensions": "^3.20.0",
     "@tiptap/pm": "^3.18.0",
     "@tiptap/react": "^3.18.0",
     "@tiptap/starter-kit": "^3.18.0",
+    "@tiptap/y-tiptap": "^3.0.2",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "bson": "^7.2.0",
@@ -26,6 +28,9 @@
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "tailwindcss": "^4.1.18",
+    "terser": "^5.46.0",
+    "y-protocols": "^1.0.7",
+    "yjs": "^13.6.29",
     "yup": "^1.7.1"
   },
   "devDependencies": {

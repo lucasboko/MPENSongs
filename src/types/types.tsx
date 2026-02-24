@@ -42,6 +42,9 @@ export type ContextType = {
     showLoginModal: boolean
     setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
 
+    notifications: string[]
+    setNotifications: React.Dispatch<React.SetStateAction<string[]>>
+
 }
 
 export type SongId = string

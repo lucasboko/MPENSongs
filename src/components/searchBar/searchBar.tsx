@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { HiMiniPlus } from "react-icons/hi2";
-import { MdLogout, MdLogin } from "react-icons/md";
+import { MdLogin } from "react-icons/md";
 import mpenlogo from '../../assets/mpensongs128x128.png'
 import { useAppContext } from "../../context";
 import type { ContextType } from "../../types";
 import { useClickOutside, clearAuth } from "../../utilities";
-import { Input, SongItem } from ".."
+import { Notifications, FilteredSongs, Input } from '../../components'
+import { IoMdLogOut } from "react-icons/io";
 
 
 const searchFormSchema = Yup.object().shape({
@@ -22,7 +23,7 @@ export const SearchBar = () => {
 
     // const navigate = useNavigate()
 
-    const { createNewSong, filteredSongs, filterSongs, setLoggedIn, isLoggedIn, setLoginModal } = useAppContext() as ContextType
+    const { createNewSong, songs, filteredSongs, filterSongs, setLoggedIn, isLoggedIn, setLoginModal, notifications, setNotifications } = useAppContext() as ContextType
 
     const searchFormik = useFormik<SearchFormValues>({
         initialValues: {
@@ -39,7 +40,6 @@ export const SearchBar = () => {
 
     const handleChange =
         (value: string) => {
-
             searchFormik.setFieldValue('search', value, true)
             filterSongs(value)
         }
@@ -61,8 +61,14 @@ export const SearchBar = () => {
 
     const oauth = {
         func: isLoggedIn ? logout : () => setLoginModal(true),
-        Icon: isLoggedIn ? MdLogout : MdLogin
+        Icon: isLoggedIn ? IoMdLogOut : MdLogin,
+        buttonTitle: isLoggedIn ? "Quitter" : "Se connecter",
+        color: isLoggedIn ? "text-red-500" : "text-blue-500"
     }
+
+    useEffect(() => {
+        filterSongs(searchFormik.values.search)
+    }, [songs])
 
     return <div className="absolute w-full z-30 bottom-[0]" ref={searchRef as React.RefObject<HTMLDivElement>}  >
         <div className="flex gap-[5px] bg-white h-[55px] px-[15px] items-center">
@@ -70,6 +76,7 @@ export const SearchBar = () => {
                 src={mpenlogo}
                 className="w-[35px] cursor-pointer"
                 onClick={() => setShowSongs(!showSongs)}
+                title="Liste des chansons"
             />
             <div className="grow">
                 <Input
@@ -86,6 +93,7 @@ export const SearchBar = () => {
                 type="button"
                 className="flex cursor-pointer p-[6px] bg-yellow-500 rounded-full items-center justify-center"
                 onClick={() => { setShowSongs(false); handleChange(''); createNewSong() }}
+                title="Nouvelle chanson"
             >
                 <HiMiniPlus className="size-[20px] text-white" />
             </button>}
@@ -93,27 +101,25 @@ export const SearchBar = () => {
                 type="button"
                 className="flex cursor-pointer p-[9px] items-center justify-center text-gray-500"
                 onClick={oauth.func}
+                title={oauth.buttonTitle}
             >
-                <oauth.Icon className="size-[18px]" />
+                {
+                    isLoggedIn
+                        ? <oauth.Icon className={`size-[20px] ${oauth.color}`} />
+                        : <span className="text-blue-500">Connexion</span>
+                }
             </button>
         </div>
-        {(filteredSongs.length && showSongs)
-            ? <div className="absolute w-[325px] border-1 left-[5px] border-gray-200 bottom-[60px] bg-white overflow-hidden rounded-xl"
-            >
-                <div className="p-[10px] max-h-[70vh] overflow-y-auto"
-                    style={{ scrollbarWidth: 'thin', scrollbarColor: '#eee #fff' }}>
-                    {
-                        filteredSongs.map(song_id =>
-                            <SongItem
-                                key={song_id}
-                                _id={song_id}
-                                clearSearch={() => { setShowSongs(false); handleChange('') }}
-                            />
-                        )
-                    }
-                </div>
-            </div>
-            : null
-        }
+        <Notifications
+            notifications={notifications}
+            setNotifications={setNotifications}
+        />
+        <FilteredSongs
+            showSongs={showSongs}
+            setShowSongs={setShowSongs}
+            filteredSongs={filteredSongs}
+            handleChange={handleChange}
+        />
+
     </div>
 }

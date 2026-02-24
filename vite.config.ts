@@ -11,4 +11,10 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    // Use Terser for JS minification (requires 'terser' to be installed)
+    minify: 'terser',
+    // Use Lightning CSS for CSS minification
+    cssMinify: 'lightningcss',
+  },
 })

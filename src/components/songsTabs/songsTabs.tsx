@@ -32,7 +32,11 @@ export const SongsTabs = () => {
                                 onClick={() => setTab(openedSong[_id])}>
                                 {openedSong[_id].name || 'Titre inconnu'}
                             </button>
-                            <div className='flex w-[20px] justify-end cursor-pointer'><HiXMark onClick={() => closeSongTab(_id)} /></div>
+                            <div 
+                            className='flex w-[20px] justify-end cursor-pointer'
+                            title="Fermer la chanson">
+                                <HiXMark onClick={() => closeSongTab(_id)} />
+                            </div>
                         </div>
                     )
                 }

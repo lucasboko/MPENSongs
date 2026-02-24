@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { HiCheck } from "react-icons/hi2";
 import * as Yup from 'yup';
@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { Input, ActionsButtons, TipTapEditor } from "../../components"
 import type { ContextType, Song } from "../../types";
 import { useAppContext } from "../../context";
-// import { trimer } from "../../utilities";
+import { trimer } from "../../utilities";
 
 const songFormSchema = Yup.object().shape({
     name: Yup.string().min(2, 'Nom invalide').required('Nom invalide').trim(),
@@ -15,46 +15,47 @@ const songFormSchema = Yup.object().shape({
     album: Yup.string()
 });
 
-// type SongFormValueType = {
-//     name?: string,
-//     artist?: string,
-//     lyrics?: string,
-//     album?: string,
-// }
+type SongFormValueType = {
+    name?: string,
+    artist?: string,
+    lyrics?: string,
+    album?: string,
+}
 
 export const Content = ({ song }: { song: Song }) => {
 
-    const { updateTab, saveSong, isLoggedIn } = useAppContext() as ContextType
+    const { tab, updateTab, songs, saveSong, isLoggedIn } = useAppContext() as ContextType
     const [transltorContent, setTransltorContent] = useState<string>('')
 
-    // const validateFunction = async (values: SongFormValueType) => {
-    //     let errors = {};
+    const validateFunction = async (values: SongFormValueType) => {
+        let errors = {};
 
-    //     const isValid = await songFormSchema.isValid(values);
-    //     const name = values.name
-    //     const artist = values.artist
+        const isValid = await songFormSchema.isValid(values);
+        const name = values.name
+        const artist = values.artist
 
-    //     if (isValid && name && artist) {
+        if (isValid && name && artist) {
 
-    //         const find = Object.keys(songs).filter(
-    //             _id => trimer(songs[_id].name) === trimer(name) &&
-    //                 trimer(songs[_id].artist) === trimer(artist)
-    //         ).length > 0
-            
-    //         errors = {
-    //             ...errors,
-    //             ...(find && { name: `Ce duo [titre et artiste] existe déjà` })
-    //         }
-    //     }
+            const find = Object.keys(songs).filter(
+                _id => _id !== song._id &&
+                    trimer(songs[_id].name) === trimer(name) &&
+                    trimer(songs[_id].artist) === trimer(artist)
+            ).length > 0
 
-    //     return errors;
+            errors = {
+                ...errors,
+                ...(find && { name: `Ce duo [titre et artiste] existe déjà` })
+            }
+        }
 
-    // };
+        return errors;
+
+    };
 
     const songFormik = useFormik<Song>({
         initialValues: song,
         validationSchema: songFormSchema,
-        // validate: validateFunction,
+        validate: validateFunction,
         onSubmit: async (values, actions) => {
             const {touched, ...toSave} = {
                 ...values,
@@ -77,6 +78,13 @@ export const Content = ({ song }: { song: Song }) => {
     const showError = (field: keyof Song) => songFormik.touched[field]
         ? songFormik.errors[field] as string
         : undefined
+
+
+    useEffect(() => {
+        if(tab && tab._id === song._id)
+            songFormik.setValues({ ...songFormik.values, ...tab })
+    }, [tab])
+
 
 
     return <form className="align-self-top" onSubmit={songFormik.handleSubmit}>
@@ -123,6 +131,7 @@ export const Content = ({ song }: { song: Song }) => {
                                 ? <button
                                     type="submit"
                                     className={`bg-blue-500 text-white hover:text-yellow-400 shadow-md/20 cursor-pointer p-[10px] rounded-full`}
+                                    title="Sauvegarder"
                                 >
                                     <HiCheck className="size-[18px] " />
                                 </button>
